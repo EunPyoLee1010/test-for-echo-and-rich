@@ -13,6 +13,28 @@ export class DepartmentRepository {
     async get(args?: Prisma.departmentsFindManyArgs) {
         return await this.departmentRepo.findMany({
             ...args,
+            select: {
+                department_id: true,
+                department_name: true,
+                employees_departments_manager_idToemployees: {
+                    select: { first_name: true, last_name: true, phone_number: true, email: true },
+                },
+                locations: {
+                    select: {
+                        countries: {
+                            select: {
+                                country_id: true,
+                                country_name: true,
+                                regions: { select: { region_name: true } },
+                            },
+                        },
+                        postal_code: true,
+                        city: true,
+                        state_province: true,
+                        street_address: true,
+                    },
+                },
+            },
         });
     }
 

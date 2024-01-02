@@ -12,7 +12,23 @@ export class EmployeeRepository {
     }
 
     async get(args?: Prisma.employeesFindManyArgs) {
-        return this.employeeRepo.findMany(args);
+        return this.employeeRepo.findMany({
+            ...args,
+            include: {
+                other_employees: {
+                    select: {
+                        employee_id: true,
+                        first_name: true,
+                        last_name: true,
+                        email: true,
+                        phone_number: true,
+                        jobs: { select: { job_title: true } },
+                    },
+                },
+                jobs: { select: { job_title: true } },
+                departments_employees_department_idTodepartments: { select: { department_name: true } },
+            },
+        });
     }
 
     async create(args: Prisma.employeesCreateManyArgs) {

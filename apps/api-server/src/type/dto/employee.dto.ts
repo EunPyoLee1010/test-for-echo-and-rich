@@ -83,8 +83,6 @@ export class GetHistoryQueryDto {
     employee_id: number;
 }
 
-export class GetDepartmentQueryDto {}
-
 export class GetLocationQueryDto {}
 
 export class UpdateSalaryBodyDto {}

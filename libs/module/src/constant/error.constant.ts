@@ -88,16 +88,28 @@ export const ERROR_FILE_PATH_NOT_FOUND: Readonly<ERROR_TYPE> = {
     message: `찾을 수 없는 파일 경로 입니다.`,
 };
 
-export const ERROR_DATABASE_USER_SELECT: Readonly<ERROR_TYPE> = {
+export const ERROR_DATABASE_EMPLOYEE_SELECT: Readonly<ERROR_TYPE> = {
     type: 'database',
     code: 5000,
-    message: `사용자 조회에 실패했습니다.`,
+    message: `직원 조회에 실패했습니다.`,
 };
 
-export const ERROR_DATABASE_USER_DELETE: Readonly<ERROR_TYPE> = {
+export const ERROR_DATABASE_HISTORY_SELECT: Readonly<ERROR_TYPE> = {
     type: 'database',
-    code: 5001,
-    message: `회원 탈퇴에 실패했습니다.`,
+    code: 5010,
+    message: `이력 조회에 실패했습니다.`,
+};
+
+export const ERROR_DATABASE_DEPARTMENT_SELECT: Readonly<ERROR_TYPE> = {
+    type: 'database',
+    code: 5020,
+    message: `부서 조회에 실패했습니다.`,
+};
+
+export const ERROR_DATABASE_DEPARTMENT_UPDATE: Readonly<ERROR_TYPE> = {
+    type: 'database',
+    code: 5021,
+    message: `부서 관련 정보 수정에 실패했습니다.`,
 };
 
 export const ERROR_SYSTEM_LOGIC: Readonly<ERROR_TYPE> = {
