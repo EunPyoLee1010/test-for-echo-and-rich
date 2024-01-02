@@ -11,7 +11,7 @@ import { encryptJwtSecretKey } from '@module/module/encryption';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { TSocketInfo, TTokenPayload } from '@module/type/token.type';
-import { UserRepository } from '@repository/rdbms/user/user.repository';
+import { UserRepository } from '@repository/rdbms/employee/employee.repository';
 import { ERROR_LOGIN_ID_NOT_FOUND, ERROR_USER_NOT_FOUND } from '@module/constant/error.constant';
 import { getIpAddress } from '@module/module/etc';
 import { CacheService } from '@repository/cache/cache.service';

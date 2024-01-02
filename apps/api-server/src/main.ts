@@ -6,18 +6,16 @@ import { StableScheduler } from './core/schedule/stable.scheduler';
 import { useContainer } from 'class-validator';
 import { LogService } from '@module/module/log/log.service';
 import { SYSTEM_TOKEN } from '@module/constant/log.constant';
-import { SocketIOAdapter } from './router/socket/socket.adapter';
-import { LogRepository } from '@repository/rdbms/log/log.repository';
 
-globalThis.serviceName = 'api';
+globalThis.serviceName = 'echo-and-rich-test';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const config = app.get(ConfigService);
-    const logger = new LogService(app.get(LogRepository));
+    const logger = new LogService();
     const port = config.get('API_PORT');
 
-    settingBootstrap(app, { logger, prefix: '/api/v1', socketAdapater: new SocketIOAdapter(app, config) });
+    settingBootstrap(app, { logger, prefix: '/api/v1' });
     useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
     app.listen(port, '0.0.0.0').then(async () => {

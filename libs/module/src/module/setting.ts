@@ -17,7 +17,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 
 export function settingBootstrap(
     app: INestApplication,
-    { logger, prefix, socketAdapater }: { logger: LogService; prefix: string; socketAdapater: WebSocketAdapter }
+    { logger, prefix, socketAdapater }: { logger: LogService; prefix: string; socketAdapater?: WebSocketAdapter }
 ) {
     app.enableCors();
     app.use(json({ limit: '50mb' }));

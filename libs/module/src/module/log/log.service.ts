@@ -3,15 +3,13 @@ import { Logger, createLogger, format, transports } from 'winston';
 import util from 'util';
 import moment from 'moment';
 import { TTokenPayload } from '@module/type/token.type';
-import { LogRepository } from '@repository/rdbms/log/log.repository';
-import { v4 } from 'uuid';
 import { TLogSaveInfo } from '@module/type/log.type';
 
 @Injectable()
 export class LogService implements LoggerService {
     private readonly logger: Logger;
     private readonly service: string = globalThis.serviceName;
-    constructor(private readonly logRepo: LogRepository) {
+    constructor() {
         const serviceFormat = util.format(`\x1b[35m%s\x1b[0m`, globalThis.serviceName ?? this.service);
         this.logger = createLogger({
             transports: [
@@ -56,7 +54,6 @@ export class LogService implements LoggerService {
     }
 
     async saveLog({ userId, message, level }: TLogSaveInfo) {
-        const logId = v4();
-        this.logRepo.create({ logId, logLevel: level, logMsg: message, serviceName: this.service, userId });
+        //로그 저장 로직
     }
 }

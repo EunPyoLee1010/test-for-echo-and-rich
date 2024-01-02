@@ -1,11 +1,9 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { LoggingMiddleware } from '@module/common/middleware/logging.middleware';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { SocketModule } from './socket/socket.module';
+import { EmployeeModule } from './employee/employee.module';
 
 @Module({
-    imports: [UserModule, AuthModule, SocketModule],
+    imports: [EmployeeModule],
 })
 export class RouterModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

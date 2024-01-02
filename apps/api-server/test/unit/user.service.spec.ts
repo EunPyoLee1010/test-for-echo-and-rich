@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CoreModule } from '../../src/core/core.module';
 import { UserService } from '../../src/router/user/user.service';
 import { RepositoryModule } from '@repository/main';
-import { UserRepository } from '@repository/rdbms/user/user.repository';
+import { UserRepository } from '@repository/rdbms/employee/employee.repository';
 import { isErrorType } from '@module/module/error';
 import { ERROR_TYPE } from '@module/constant/error.constant';
 import { v4 } from 'uuid';

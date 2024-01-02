@@ -1,4 +1,7 @@
 {
+  "dependencies": {
+    "@nestjs/mapped-types": "*"
+  },
   "name": "api-server",
   "version": "1.0.0",
   "description": "api server boilerplate",

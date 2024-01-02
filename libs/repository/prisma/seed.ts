@@ -1,9 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 
-async function seed() {
+async function bootstrap() {
     const prisma = new PrismaClient();
-    prisma.$queryRaw`select 1`;
     console.log('Seed Code 추가');
 }
 
-seed();
+bootstrap();

@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../../src/router/auth/auth.service';
 import { ConfigService } from '@nestjs/config';
 import { RDBMSConnectionManager } from '@repository/rdbms/manager';
-import { UserRepository } from '@repository/rdbms/user/user.repository';
+import { UserRepository } from '@repository/rdbms/employee/employee.repository';
 import { TRequestInfo } from '@module/type/request.type';
 import { GoogleOauthService } from '@api-server/core/oauth/provider/google.auth';
 import { UserService } from '../../src/router/user/user.service';

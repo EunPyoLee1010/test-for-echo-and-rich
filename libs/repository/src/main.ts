@@ -1,9 +1,10 @@
 import { Global, Module } from '@nestjs/common';
 import { RDBMSConnectionManager } from './rdbms/manager';
-import { UserRepository } from './rdbms/user/user.repository';
-import { LogRepository } from './rdbms/log/log.repository';
+import { EmployeeRepository } from './rdbms/employee/employee.repository';
+import { JobHistoryRepository } from './rdbms/employee/job-history.repository';
+import { DepartmentRepository } from './rdbms/employee/department.repository';
 
-const repositoryList = [RDBMSConnectionManager, UserRepository, LogRepository];
+const repositoryList = [RDBMSConnectionManager, EmployeeRepository, JobHistoryRepository, DepartmentRepository];
 
 @Global()
 @Module({
