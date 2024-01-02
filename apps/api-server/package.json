@@ -1,0 +1,51 @@
+{
+  "name": "api-server",
+  "version": "1.0.0",
+  "description": "api server boilerplate",
+  "main": "dist/apps/api-server/src/main.js",
+  "scripts": {
+    "start:dev": "cross-env NODE_ENV=development nest start api-server -p ./tsconfig.app.json -c ../../nest-cli.json --watch",
+    "start": "nest start api-server -p ./tsconfig.app.json -c ../../nest-cli.json",
+    "prebuild": "rm -rf ./dist",
+    "build": "nest build api-server -p ./tsconfig.app.json -c ../../nest-cli.json",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "../../",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@api-server(|/.*)$": "<rootDir>/apps/api-server/src/$1",
+      "^@module(|/.*)$": "<rootDir>/libs/module/src/$1",
+      "^@repository(|/.*)$": "<rootDir>/libs/repository/src/$1"
+    }
+  },
+  "devDependencies": {
+    "@types/node-geocoder": "^4.2.4"
+  }
+}

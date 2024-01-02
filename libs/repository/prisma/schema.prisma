@@ -1,0 +1,55 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("RDBMS_URL")
+  schemas  = ["User", "Log"]
+}
+
+model User {
+  userId         String    @id @default(uuid()) @map("id") @db.Uuid()
+  loginId        String    @unique @map("login_id") @db.VarChar(50)
+  loginType      LoginType @map("login_type")
+  passwdEnc      String    @map("passwd_enc") @db.VarChar(88)
+  passwdSalt     String    @map("passwd_salt") @db.VarChar(88)
+  name           String?   @db.VarChar(50)
+  createdAt      DateTime  @default(now()) @map("created_at")
+  lastAccessedAt DateTime  @default(now()) @map("last_accessed_at")
+  deletedAt      DateTime? @map("deleted_at")
+  pictureUrl     String?   @map("picture_url")
+
+  @@schema("User")
+}
+
+model Log {
+  logId       String   @id @default(uuid()) @map("id") @db.Uuid()
+  userId      String   @map("user_id") @db.VarChar(36)
+  serviceName String   @map("server_name") @db.VarChar(30)
+  createdAt   DateTime @default(now()) @map("created_at")
+  logMsg      String   @map("message") @db.Text()
+  logLevel    LogLevel @map("level")
+
+  @@schema("Log")
+}
+
+enum LoginType {
+  google
+  kakao
+  naver
+  system
+
+  @@schema("User")
+}
+
+enum LogLevel {
+  info
+  debug
+  verbose
+  error
+  warn
+
+  @@schema("Log")
+}

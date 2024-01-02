@@ -1,0 +1,34 @@
+name: Build Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: 커밋한 브랜치로 이동
+        uses: actions/checkout@v2
+
+      - name: 환경 구성 Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: (apps, libs) Package Install
+        run: npm run init
+
+      - name: (libs/repository) Prisma Init
+        run: npm run prisma
+
+      - name: (apps, libs) Build
+        run: npm run build
+
+      - name: (apps, libs) Lint Check
+        run: npm run lint

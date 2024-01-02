@@ -1,0 +1,51 @@
+{
+  "name": "repository",
+  "version": "1.0.0",
+  "description": "repository library boilerplate",
+  "scripts": {
+    "build": "tsc -p ./tsconfig.lib.json",
+    "prisma:migrate:dev": "dotenv -e ../../.development.env prisma migrate dev --name init",
+    "prisma:migrate:prod": "dotenv -e ../../.production.env prisma migrate dev --name init",
+    "prisma:push": "prisma db push",
+    "prisma:generate": "prisma generate && prisma db seed",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "../../",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@api-server(|/.*)$": "<rootDir>/apps/api-server/src/$1",
+      "^@module(|/.*)$": "<rootDir>/libs/module/src/$1",
+      "^@repository(|/.*)$": "<rootDir>/libs/repository/src/$1"
+    }
+  },
+  "prisma": {
+    "seed": "dotenv -e ../../.development.env ts-node ./prisma/seed.ts"
+  }
+}
