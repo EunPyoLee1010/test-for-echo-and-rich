@@ -2,7 +2,7 @@
 import { IsValidDepartment } from '@api-server/common/decorator/department.decorator';
 import { IsValidEmployee } from '@api-server/common/decorator/employee.decorator';
 import { Expose } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export class GetDepartmentResponse {
     @Expose()
@@ -35,7 +35,9 @@ export class UpdateDepartmentParamDto {
 
 export class UpdateDepartmentBodyDto {
     @IsOptional()
-    @IsNumber({ allowInfinity: false, allowNaN: false })
+    @IsNumber({ allowInfinity: false, allowNaN: false, maxDecimalPlaces: 2 })
+    @Min(0)
+    @Max(100)
     salaryPercent?: number;
 
     @IsValidEmployee()

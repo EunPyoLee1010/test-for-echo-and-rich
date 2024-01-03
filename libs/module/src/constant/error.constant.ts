@@ -76,6 +76,12 @@ export const ERROR_PHONE_NUMBER_NOT_VERIFIED: Readonly<ERROR_TYPE> = {
     message: `인증 완료되지 않은 전화번호입니다.`,
 };
 
+export const ERROR_HTTP_REQUEST_URL: Readonly<ERROR_TYPE> = {
+    type: 'business',
+    code: 4020,
+    message: `URL에 정보 요청을 실패했습니다.`,
+};
+
 export const ERROR_CREATE_UPLOAD_URL: Readonly<ERROR_TYPE> = {
     type: 'business',
     code: 4900,

@@ -29,7 +29,7 @@ export class DepartmentService {
         try {
             const updateResult = await this.employeeRepo.update({
                 where: { department_id },
-                data: { salary: { multiply: (salaryPercent ?? 0) + 1 }, manager_id },
+                data: { salary: { multiply: (salaryPercent ?? 0) * 0.01 + 1 }, manager_id },
             });
             return updateResult;
         } catch (e) {

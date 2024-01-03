@@ -45,3 +45,20 @@ export class TransformInterceptor<T> implements NestInterceptor {
         }
     }
 }
+
+export async function TransformResponse<T>({
+    req,
+    res,
+    data,
+}: {
+    req: Request;
+    res: Response;
+    data: T;
+}): Promise<TTransformResponse<T | Readonly<ERROR_TYPE>>> {
+    return {
+        statusCode: res.statusCode,
+        path: req.path,
+        timestamp: new Date().toISOString(),
+        response: data,
+    };
+}
