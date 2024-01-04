@@ -1,7 +1,12 @@
 /* eslint-disable camelcase */
-import { Controller, Get, ParseIntPipe, Query, UsePipes } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { EmployeeService } from './employee.service';
-import { GetEmployeeQueryDto, GetEmployeeResponse, GetHistoryResponse } from '@api-server/type/dto/employee.dto';
+import {
+    GetEmployeeHistoryQueryDto,
+    GetEmployeeQueryDto,
+    GetEmployeeResponse,
+    GetHistoryResponse,
+} from '@api-server/type/dto/employee.dto';
 import { Transform } from '@module/common/interceptor/transform.interceptor';
 import { EmployParseIntPipe } from '@api-server/common/pipe/employee.pipe';
 
@@ -11,16 +16,15 @@ export class EmployeeController {
 
     @Get()
     @Transform(GetEmployeeResponse)
-    @UsePipes(EmployParseIntPipe)
-    async get(@Query() { employee_id, email, job_id }: GetEmployeeQueryDto) {
-        const employeeList = await this.employeeService.getEmployee({ employee_id, email, job_id });
+    async get(@Query() { employee_id, email, job_id, department_id }: GetEmployeeQueryDto) {
+        const employeeList = await this.employeeService.get({ employee_id, email, job_id, department_id });
         return employeeList;
     }
 
     @Get('/history')
     @Transform(GetHistoryResponse)
-    async getHistory(@Query('employee_id', ParseIntPipe) employee_id: number) {
-        const employeeHistory = await this.employeeService.getEmployHistory({ employee_id });
+    async getHistory(@Query(EmployParseIntPipe) { employee_id }: GetEmployeeHistoryQueryDto) {
+        const employeeHistory = await this.employeeService.getHistory({ employee_id });
         return employeeHistory;
     }
 }

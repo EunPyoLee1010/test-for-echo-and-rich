@@ -37,7 +37,7 @@ export function settingBootstrap(
         req.requestInfo = { uuid, reqStartTime: Date.now() };
         const endpointInfo = app
             .get(HttpAdapterHost)
-            .httpAdapter['instance']._router.stack.map((v) => v.route?.path)
+            .httpAdapter['instance']._router.stack.map((v) => v.route?.path?.split(':')?.[0])
             .filter((v) => v);
         const endpointList: string[] = Array.from(new Set(endpointInfo));
         if (!endpointList.some((v) => req.originalUrl.includes(v))) {

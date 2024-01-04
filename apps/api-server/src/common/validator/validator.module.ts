@@ -1,6 +1,8 @@
 import { Global, Module } from '@nestjs/common';
+import { EmployeetIdValidator } from './employee.decorator';
+import { DepartmentIdValidator } from './department.decorator';
 
-const validatorList = [];
+const validatorList = [EmployeetIdValidator, DepartmentIdValidator];
 
 @Global()
 @Module({

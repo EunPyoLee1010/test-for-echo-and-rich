@@ -5,7 +5,9 @@ export const customRequestParamTuple = ['posts', 'comments'] as const;
 export type TCustomRequestParam = (typeof customRequestParamTuple)[number];
 
 export class GetCustomParamDto {
-    @IsEnum(customRequestParamTuple)
+    @IsEnum(customRequestParamTuple, {
+        message: `가능한 field Option은 다음과 같습니다. ${customRequestParamTuple.toString()}`,
+    })
     field: TCustomRequestParam;
 
     @IsNumberString()

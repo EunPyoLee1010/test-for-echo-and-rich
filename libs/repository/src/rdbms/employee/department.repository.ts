@@ -17,7 +17,7 @@ export class DepartmentRepository {
                 department_id: true,
                 department_name: true,
                 employees_departments_manager_idToemployees: {
-                    select: { first_name: true, last_name: true, phone_number: true, email: true },
+                    select: { employee_id: true, first_name: true, last_name: true, phone_number: true, email: true },
                 },
                 locations: {
                     select: {

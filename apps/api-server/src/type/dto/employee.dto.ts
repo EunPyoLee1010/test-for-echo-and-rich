@@ -1,7 +1,36 @@
 /* eslint-disable camelcase */
-import { ApiProperty } from '@nestjs/swagger';
-import { Exclude, Expose, Transform, Type } from 'class-transformer';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { Expose, Transform, Type } from 'class-transformer';
 import { IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+
+export class EmployeeListResponse {
+    @Expose()
+    employee_id: number;
+
+    @Expose()
+    email: string;
+
+    @Expose()
+    first_name: string;
+
+    @Expose()
+    last_name: string;
+
+    @Expose()
+    phone_number: string;
+
+    @Expose()
+    @Transform(({ value }) => (value ? Number(value) : undefined))
+    salary: number;
+
+    @Expose()
+    @Transform(({ value }) => (value ? Number(value) : undefined))
+    commission_pct: number;
+
+    @Expose({ name: 'jobs' })
+    @Transform(({ value }) => value.job_title)
+    job_title: string;
+}
 
 export class GetEmployeeResponse {
     @Expose()
@@ -19,20 +48,38 @@ export class GetEmployeeResponse {
     @Expose()
     phone_number: string;
 
-    @Exclude()
+    @Expose()
+    hire_date: Date;
+
+    @Expose()
+    @Transform(({ obj }) => obj?.departments_employees_department_idTodepartments?.department_id)
+    department_id: number;
+
+    @Expose()
+    @Transform(({ obj }) => obj?.departments_employees_department_idTodepartments?.department_name)
+    department_name: string;
+
+    @Expose({ name: 'jobs' })
+    @Transform(({ value }) => value?.job_title)
+    job_title: string;
+
+    @Expose()
+    @Transform(({ value }) => (value ? Number(value) : undefined))
     salary: number;
 
-    @Transform(({ value }) => (value ? +value : undefined))
     @Expose()
+    @Transform(({ value }) => (value ? Number(value) : undefined))
     commission_pct: number;
 
     @Expose({ name: 'other_employees' })
-    employees: any;
+    @Type(() => EmployeeListResponse)
+    employees: EmployeeListResponse;
 }
 
 export class GetEmployeeQueryDto {
     @IsOptional()
-    @IsString()
+    @IsNumber()
+    @Transform(({ value }) => (value === undefined ? undefined : +value))
     @ApiProperty()
     employee_id?: number;
 
@@ -44,7 +91,15 @@ export class GetEmployeeQueryDto {
     @IsString()
     @MaxLength(10)
     job_id?: string;
+
+    @IsOptional()
+    @IsNumber()
+    @Transform(({ value }) => (value === undefined ? undefined : +value))
+    @ApiProperty()
+    department_id?: number;
 }
+
+export class GetEmployeeHistoryQueryDto extends PickType(GetEmployeeQueryDto, ['employee_id']) {}
 
 export class HistoryList {
     @Expose()
@@ -53,11 +108,13 @@ export class HistoryList {
     @Expose()
     end_date: Date;
 
-    @Expose()
-    departments: any;
+    @Expose({ name: 'departments' })
+    @Transform(({ value }) => value.department_name)
+    department_name: string;
 
-    @Expose()
-    jobs: any;
+    @Expose({ name: 'jobs' })
+    @Transform(({ value }) => value.job_title)
+    job_title: string;
 }
 
 export class GetHistoryResponse {

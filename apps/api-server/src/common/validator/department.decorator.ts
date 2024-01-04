@@ -10,7 +10,9 @@ export class DepartmentIdValidator implements ValidatorConstraintInterface {
     constructor(private readonly departmentRepo: DepartmentRepository) {}
     async validate(department_id: number) {
         try {
-            const isExist = await this.departmentRepo.get({ where: { department_id } });
+            const isExist = await this.departmentRepo.get({
+                where: { department_id: typeof department_id === 'string' ? +department_id : department_id },
+            });
             return isExist.length > 0;
         } catch (e) {
             console.log(e);

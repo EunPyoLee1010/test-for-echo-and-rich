@@ -8,11 +8,12 @@ import { JobHistoryRepository } from '@repository/rdbms/employee/job-history.rep
 @Injectable()
 export class EmployeeService {
     constructor(private readonly employRepo: EmployeeRepository, private readonly historyRepo: JobHistoryRepository) {}
-    async getEmployee({ employee_id, email, job_id }: GetEmployeeQueryDto) {
+    async get({ employee_id, email, job_id, department_id }: GetEmployeeQueryDto) {
         try {
-            const employeeList = await this.employRepo.get({ where: { employee_id, email, job_id } });
+            const employeeList = await this.employRepo.get({ where: { employee_id, email, job_id, department_id } });
             return employeeList.map((v) => {
-                (v as any).commission_pct = v.commission_pct?.toString();
+                (v as any).commission_pct = v.commission_pct ? Number(v.commission_pct) : null;
+                (v as any).salary = v.salary ? Number(v.salary) : null;
                 return v;
             });
         } catch (e) {
@@ -21,7 +22,7 @@ export class EmployeeService {
         }
     }
 
-    async getEmployHistory({ employee_id }: GetHistoryQueryDto) {
+    async getHistory({ employee_id }: GetHistoryQueryDto) {
         try {
             const historyList = await this.historyRepo.get({ where: { employee_id } });
             if (historyList.length === 0) return historyList;

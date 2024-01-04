@@ -46,7 +46,7 @@ export class TransformInterceptor<T> implements NestInterceptor {
     }
 }
 
-export async function TransformResponse<T>({
+export function TransformResponse<T>({
     req,
     res,
     data,
@@ -54,7 +54,7 @@ export async function TransformResponse<T>({
     req: Request;
     res: Response;
     data: T;
-}): Promise<TTransformResponse<T | Readonly<ERROR_TYPE>>> {
+}): TTransformResponse<T | Readonly<ERROR_TYPE>> {
     return {
         statusCode: res.statusCode,
         path: req.path,

@@ -1,8 +1,35 @@
 /* eslint-disable camelcase */
 import { IsValidDepartment } from '@api-server/common/decorator/department.decorator';
 import { IsValidEmployee } from '@api-server/common/decorator/employee.decorator';
-import { Expose } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 import { IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
+import { GetEmployeeResponse } from './employee.dto';
+
+export class GetLocationResponse {
+    @Expose()
+    @Transform(({ obj }) => obj?.countries?.country_name)
+    country_name: string;
+
+    @Expose()
+    @Transform(({ obj }) => obj?.countries?.country_id)
+    country_id: string;
+
+    @Expose({ name: 'countries' })
+    @Transform(({ value }) => value?.regions?.region_name)
+    region_name: string;
+
+    @Expose()
+    postal_code: string;
+
+    @Expose()
+    city: string;
+
+    @Expose()
+    state_province: string;
+
+    @Expose()
+    street_address: string;
+}
 
 export class GetDepartmentResponse {
     @Expose()
@@ -12,10 +39,13 @@ export class GetDepartmentResponse {
     department_name: string;
 
     @Expose({ name: 'employees_departments_manager_idToemployees' })
-    manager: any;
+    @Transform(({ value }) => value ?? undefined)
+    @Type(() => GetEmployeeResponse)
+    manager: GetEmployeeResponse;
 
-    @Expose()
-    locations: any;
+    @Expose({ name: 'locations' })
+    @Type(() => GetLocationResponse)
+    location: GetLocationResponse;
 }
 
 export class GetDepartmentQueryDto {
