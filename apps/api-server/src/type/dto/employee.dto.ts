@@ -92,7 +92,8 @@ export class GetEmployeeResponse {
 
     @Expose({ name: 'other_employees' })
     @Type(() => EmployeeListResponse)
-    employees: EmployeeListResponse;
+    @ApiProperty({ type: Array<EmployeeListResponse>, description: '관리 직원 정보' })
+    employees: EmployeeListResponse[];
 }
 
 export class GetEmployeeQueryDto {
@@ -124,21 +125,21 @@ export class GetEmployeeHistoryQueryDto extends PickType(GetEmployeeQueryDto, ['
 
 export class HistoryList {
     @Expose()
-    @ApiProperty({type: Date, description: '입사일', example: new Date()})
+    @ApiProperty({ type: Date, description: '입사일', example: new Date() })
     start_date: Date;
 
     @Expose()
-    @ApiProperty({type: Date, description: '퇴사일', example: new Date()})
+    @ApiProperty({ type: Date, description: '퇴사일', example: new Date() })
     end_date: Date;
 
     @Expose({ name: 'departments' })
     @Transform(({ value }) => value.department_name)
-    @ApiProperty({type: String, description: '부서명', example: 'IT'})
+    @ApiProperty({ type: String, description: '부서명', example: 'IT' })
     department_name: string;
 
     @Expose({ name: 'jobs' })
     @Transform(({ value }) => value.job_title)
-    @ApiProperty({type: String, description: '직급', example: 'IT Engineer'})
+    @ApiProperty({ type: String, description: '직급', example: 'IT Engineer' })
     job_title: string;
 }
 
@@ -161,7 +162,8 @@ export class GetHistoryResponse {
 
     @Expose({ name: 'historyList' })
     @Type(() => HistoryList)
-    job_history: any;
+    @ApiProperty({ type: HistoryList, description: '직원 경력' })
+    job_history: HistoryList;
 }
 
 export class GetHistoryQueryDto {
